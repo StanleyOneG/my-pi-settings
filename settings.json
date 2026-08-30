@@ -1,0 +1,65 @@
+{
+  "lastChangelogVersion": "0.84.4",
+  "enableSkillCommands": true,
+  "quietStartup": false,
+  "packages": [
+    "npm:pi-web-access",
+    "npm:pi-subagents",
+    "npm:pi-context-view",
+    "npm:pi-btw"
+  ],
+  "theme": "dark",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.6-sol",
+  "defaultThinkingLevel": "high",
+  "subagents": {
+    "defaultProvider": "openai-codex",
+    "defaultModel": "gpt-5.6-sol",
+    "defaultThinking": "high",
+    "maxThinking": "xhigh",
+    "agentOverrides": {
+      "scout": {
+        "model": "gpt-5.6-luna",
+        "thinking": "high",
+        "defaultContext": "fresh",
+        "inheritProjectContext": true,
+        "inheritGlobalContext": false
+      },
+      "researcher": {
+        "model": "gpt-5.6-terra",
+        "thinking": "high",
+        "defaultContext": "fresh",
+        "inheritProjectContext": true,
+        "inheritGlobalContext": false
+      },
+      "worker": {
+        "model": "gpt-5.6-terra",
+        "thinking": "high",
+        "defaultContext": "fork",
+        "inheritProjectContext": true,
+        "inheritGlobalContext": false
+      },
+      "reviewer": {
+        "model": "gpt-5.6-sol",
+        "thinking": "xhigh",
+        "defaultContext": "fresh",
+        "inheritProjectContext": true,
+        "inheritGlobalContext": false
+      },
+      "oracle": {
+        "model": "gpt-5.6-sol",
+        "thinking": "high",
+        "defaultContext": "fork",
+        "inheritProjectContext": true,
+        "inheritGlobalContext": false
+      },
+      "delegate": {
+        "model": "gpt-5.6-luna",
+        "thinking": "high",
+        "defaultContext": "fresh",
+        "inheritProjectContext": true,
+        "inheritGlobalContext": false
+      }
+    }
+  }
+}
