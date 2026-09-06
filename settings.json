@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.4",
+  "lastChangelogVersion": "0.85.1",
   "enableSkillCommands": true,
   "quietStartup": false,
   "packages": [
@@ -10,8 +10,8 @@
   ],
   "theme": "dark",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.6-sol",
-  "defaultThinkingLevel": "high",
+  "defaultModel": "gpt-6-astra",
+  "defaultThinkingLevel": "medium",
   "subagents": {
     "defaultProvider": "openai-codex",
     "defaultModel": "gpt-5.6-sol",
@@ -19,36 +19,36 @@
     "maxThinking": "xhigh",
     "agentOverrides": {
       "scout": {
-        "model": "gpt-5.6-luna",
-        "thinking": "high",
+        "model": "gpt-5.6-sol",
+        "thinking": "medium",
         "defaultContext": "fresh",
         "inheritProjectContext": true,
         "inheritGlobalContext": false
       },
       "researcher": {
-        "model": "gpt-5.6-terra",
+        "model": "gpt-5.6-sol",
         "thinking": "high",
         "defaultContext": "fresh",
         "inheritProjectContext": true,
         "inheritGlobalContext": false
       },
       "worker": {
-        "model": "gpt-5.6-terra",
+        "model": "gpt-5.6-sol",
         "thinking": "high",
         "defaultContext": "fork",
         "inheritProjectContext": true,
         "inheritGlobalContext": false
       },
       "reviewer": {
-        "model": "gpt-5.6-sol",
-        "thinking": "xhigh",
+        "model": "gpt-6-astra",
+        "thinking": "high",
         "defaultContext": "fresh",
         "inheritProjectContext": true,
         "inheritGlobalContext": false
       },
       "oracle": {
-        "model": "gpt-5.6-sol",
-        "thinking": "high",
+        "model": "gpt-5.6-astra",
+        "thinking": "medium",
         "defaultContext": "fork",
         "inheritProjectContext": true,
         "inheritGlobalContext": false
@@ -63,3 +63,4 @@
     }
   }
 }
+
