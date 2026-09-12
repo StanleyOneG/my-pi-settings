@@ -1,34 +1,41 @@
-## Subagent orchestration
+## Subagent policy
 
-Use pi-subagents proactively when a task is multi-file, unfamiliar, ambiguous,
-risky, requires external research, or benefits from independent verification.
+Before orchestrating subagents, read the pi-subagents skill.
 
-For substantial implementation work, act as the parent orchestrator rather than
-the routine implementer:
+Use `reviewer` for code reviews and rechecks, including Standards/Spec reviews
+requested by skills that only say "subagent". Do not substitute `delegate`.
 
-1. Clarify requirements and acceptance criteria.
-2. Use a fresh-context scout to inspect relevant code, conventions, tests, and
-   integration points.
-3. Use researcher when current external documentation or primary-source
-   evidence materially affects the implementation.
-4. Have one worker implement the approved scope.
-5. Use fresh-context reviewers with distinct, evidence-based review angles.
-6. Send accepted findings to one worker for correction.
-7. Inspect the final diff and validation evidence before reporting completion.
+### Context boundaries
 
-Keep one writer per cwd or worktree. Parallelize read-only investigation and
-review; use isolated worktrees when parallel writers are genuinely necessary.
+Start a new worker for each review-fix round with accepted findings and a
+compact handoff. Resume only small same-phase continuations when retaining
+history has a concrete benefit and current context plus expected work fits
+below the rotation threshold.
 
-Use fresh context for scouts, researchers, and adversarial reviewers. Use forked
-context for workers and oracle when inherited decisions matter.
+At phase boundaries and before resume or fork, check current context-window
+usage, not cumulative spend or a peak badge. Include inherited history and
+expected next-task growth when deciding whether the work fits.
 
-Run subagents asynchronously by default. If a child encounters an unapproved
-product, scope, architecture, or security decision, it must ask through the
-supervisor channel rather than guessing.
+- Checkpoint at 100k tokens or 50% of the model window, whichever is lower.
+- Rotate by 120k tokens or 60%, whichever is lower; earlier for large tasks.
+- If usage is unknown, prefer a new child at the boundary.
 
-Give every child a cold-start-complete contract: objective, exact target/cwd/ref,
-authority boundary, relevant context, success criteria, validation, expected
-output, and stop/escalation conditions.
+Give each worker one deliverable slice. Include these thresholds and an
+instruction to checkpoint and return if the slice grows beyond its budget
+in the worker's task, rather than relying on global instruction inheritance.
 
-Skip delegation for trivial questions, tiny edits, and direct commands where
-another agent would not materially improve evidence, review, or isolation.
+### Rotation
+
+Use existing reports to prepare the handoff instead of reviving an oversized
+worker just to summarize it. Preserve decisions, worktree and dirty state,
+validation results, unresolved findings, and the next task. Reference source
+artifacts instead of copying transcripts.
+
+For an active writer, request its checkpoint after the current tool returns.
+Confirm it has stopped writing before starting its replacement in the same
+worktree, preserving uncommitted changes.
+
+Use compaction only through a supported control and verify reduced current
+context before continuing. Otherwise, hand off to a new child. Resume and
+writing a handoff document do not reset context.
+
