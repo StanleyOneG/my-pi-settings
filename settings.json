@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.85.1",
+  "lastChangelogVersion": "0.99.1",
   "enableSkillCommands": true,
   "quietStartup": false,
   "packages": [
@@ -14,26 +14,26 @@
   "defaultThinkingLevel": "medium",
   "subagents": {
     "defaultProvider": "openai-codex",
-    "defaultModel": "gpt-5.6-sol",
+    "defaultModel": "gpt-6.1-sol",
     "defaultThinking": "high",
-    "maxThinking": "xhigh",
+    "maxThinking": "max",
     "agentOverrides": {
       "scout": {
-        "model": "gpt-5.6-sol",
-        "thinking": "medium",
+        "model": "gpt-6-luna",
+        "thinking": "max",
         "defaultContext": "fresh",
         "inheritProjectContext": true,
         "inheritGlobalContext": false
       },
       "researcher": {
-        "model": "gpt-5.6-sol",
+        "model": "gpt-6.1-sol",
         "thinking": "high",
         "defaultContext": "fresh",
         "inheritProjectContext": true,
         "inheritGlobalContext": false
       },
       "worker": {
-        "model": "gpt-5.6-sol",
+        "model": "gpt-6.1-sol",
         "thinking": "high",
         "defaultContext": "fresh",
         "inheritProjectContext": true,
@@ -41,26 +41,31 @@
       },
       "reviewer": {
         "model": "gpt-6-astra",
-        "thinking": "high",
+        "thinking": "medium",
         "defaultContext": "fresh",
         "inheritProjectContext": true,
         "inheritGlobalContext": false
       },
       "oracle": {
-        "model": "gpt-5.6-astra",
+        "model": "gpt-6-astra",
         "thinking": "medium",
-        "defaultContext": "fork",
+        "defaultContext": "fresh",
         "inheritProjectContext": true,
         "inheritGlobalContext": false
       },
       "delegate": {
-        "model": "gpt-5.6-luna",
+        "model": "gpt-6.1-sol",
         "thinking": "high",
         "defaultContext": "fresh",
         "inheritProjectContext": true,
         "inheritGlobalContext": false
       }
     }
-  }
+  },
+  "enabledModels": [
+    "openai-codex/gpt-6-astra",
+    "openai-codex/gpt-6.1-sol",
+    "openai-codex/gpt-6-luna"
+  ]
 }
 
