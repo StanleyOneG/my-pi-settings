@@ -129,7 +129,10 @@ export class WeeklyUsageCache {
 		if (ctx.model !== this.ctx?.model || ctx.modelRegistry !== this.ctx?.modelRegistry) return " | usage weekly: unavailable";
 		const fresh = this.cached && this.now() - this.cached.at < weeklyUsageIntervalMs(this.cached.remainingPercent, this.ttlMs) &&
 			(this.cached.resetAt === undefined || this.now() < this.cached.resetAt);
-		return fresh ? ` | usage weekly: ${Math.round(this.cached.remainingPercent)}% left` : " | usage weekly: unavailable";
+		if (fresh) return ` | usage weekly: ${Math.round(this.cached.remainingPercent)}% left`;
+		// An aborted old-generation request is not loading for a newly selected model.
+		return this.busy && this.refreshGeneration === this.generation
+			? " | usage weekly: loading" : " | usage weekly: unavailable";
 	}
 
 	async refresh() {
@@ -144,6 +147,7 @@ export class WeeklyUsageCache {
 		const controller = new AbortController();
 		this.controller = controller;
 		this.busy = true;
+		this.refreshGeneration = generation;
 		// Clear before resolving auth: an account change must not inherit cached quota.
 		this.cached = undefined;
 		this.onChange();
@@ -165,6 +169,7 @@ export class WeeklyUsageCache {
 			}
 		} finally {
 			this.busy = false;
+			this.refreshGeneration = undefined;
 			if (this.controller === controller) this.controller = undefined;
 			if (this.active) {
 				this.onChange();
