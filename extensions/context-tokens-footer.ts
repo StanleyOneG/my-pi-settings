@@ -1,10 +1,12 @@
 import { isAbsolute, relative, resolve, sep } from "node:path";
 import {
 	SettingsManager,
+	getPackageDir,
 	type ExtensionAPI,
 	type ReadonlyFooterDataProvider,
 } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
+import { WeeklyUsageCache } from "./context-tokens-footer-lib/weekly-usage.mjs";
 
 type Totals = {
 	input: number;
@@ -66,7 +68,15 @@ function addUsage(totals: Totals, usage: Usage): void {
 }
 
 export default function contextTokensFooter(pi: ExtensionAPI): void {
+	let weeklyUsage: WeeklyUsageCache | undefined;
+	pi.on("model_select", (_event, ctx) => weeklyUsage?.select(ctx));
+	pi.on("agent_end", () => { void weeklyUsage?.refresh(); });
+	pi.on("session_shutdown", () => {
+		weeklyUsage?.dispose();
+		weeklyUsage = undefined;
+	});
 	pi.on("session_start", (_event, ctx) => {
+		weeklyUsage?.dispose();
 		if (ctx.mode !== "tui") return;
 
 		const autoCompactEnabled = SettingsManager.create(ctx.cwd, undefined, {
@@ -75,9 +85,22 @@ export default function contextTokensFooter(pi: ExtensionAPI): void {
 
 		ctx.ui.setFooter((tui, theme, footerData: ReadonlyFooterDataProvider) => {
 			const unsubscribe = footerData.onBranchChange(() => tui.requestRender());
+			const usage = new WeeklyUsageCache({
+				packageDir: getPackageDir(),
+				onChange: () => tui.requestRender(),
+			});
+			weeklyUsage = usage;
+			usage.start(ctx);
+			let disposed = false;
 
 			return {
-				dispose: unsubscribe,
+				dispose() {
+					if (disposed) return;
+					disposed = true;
+					unsubscribe();
+					usage.dispose();
+					if (weeklyUsage === usage) weeklyUsage = undefined;
+				},
 				invalidate() {},
 				render(width: number): string[] {
 					const totals: Totals = {
@@ -162,7 +185,7 @@ export default function contextTokensFooter(pi: ExtensionAPI): void {
 							: contextPercentValue > 70
 								? theme.fg("warning", contextDisplay)
 								: contextDisplay;
-					statsParts.push(coloredContext);
+					statsParts.push(coloredContext + usage.label(ctx));
 
 					let statsLeft = statsParts.join(" ");
 					let statsLeftWidth = visibleWidth(statsLeft);
