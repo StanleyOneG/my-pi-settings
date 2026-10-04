@@ -4,3 +4,7 @@
 - When assessing quantity, kind and type of subagents to spawn think of subagent's context window to be in a "smart zone" (under ~150k tokens: +30k tokens is acceptable) so that subagent could effectively complete its task in clean "smart zone" context window.
 - Use subagents for implementation tasks to keep your context window low to have move opportunities to orchestrate and steer subagents for nice and effective task completion.
 
+## pstack/poteto models
+
+When using pstack, select the model configured for the applicable role in ~/.pi/agent/pstack/models.json and pass it explicitly in the subagent call's model parameter. For inherit-parent or auto, resolve and pass the current session's model explicitly. Use a different model only when explicitly instructed by the user.
+

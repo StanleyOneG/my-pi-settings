@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "roles": {
+    "feature, refactoring": "openai-codex/gpt-6.1-sol",
+    "bug-fix": "openai-codex/gpt-6.1-sol",
+    "perf-issue": "openai-codex/gpt-6.1-sol",
+    "hillclimb": "openai-codex/gpt-6-astra",
+    "judgment and prose": "openai-codex/gpt-6-astra",
+    "hardest tasks": "openai-codex/gpt-6-astra",
+    "how explorer": "openai-codex/gpt-6-luna",
+    "how explainer": "openai-codex/gpt-6.1-sol",
+    "why investigators": "openai-codex/gpt-6-luna",
+    "why synthesizer": "openai-codex/gpt-6-astra",
+    "reflect tooling": "openai-codex/gpt-6-luna",
+    "reflect judgment, divergent, synthesizer": "openai-codex/gpt-6-astra",
+    "arena runners": [
+      "openai-codex/gpt-6-astra",
+      "openai-codex/gpt-6.1-sol"
+    ],
+    "arena cross-judge pool": [
+      "openai-codex/gpt-6-astra",
+    ],
+    "swarm workers": "openai-codex/gpt-6.1-sol",
+    "architect runners": [
+      "openai-codex/gpt-6-astra",
+      "openai-codex/gpt-6.1-sol"
+    ],
+    "interrogate reviewers": [
+      "openai-codex/gpt-6-astra",
+      "openai-codex/gpt-6.1-sol"
+    ]
+  },
+  "skillsEnabled": true
+}

@@ -1,8 +1,9 @@
 {
-  "lastChangelogVersion": "0.99.1",
-  "enableSkillCommands": true,
+"lastChangelogVersion": "1.0.2",
+"enableSkillCommands": true,
   "quietStartup": false,
   "packages": [
+    "npm:@zenspc/pi-pstack",
     "npm:pi-web-access",
     "npm:pi-subagents",
     "npm:pi-context-view",
